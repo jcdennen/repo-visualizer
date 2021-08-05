@@ -10,18 +10,6 @@ import { Tree } from "./Tree.tsx"
 const main = async () => {
   core.info('[INFO] Usage https://github.com/githubocto/repo-visualizer#readme')
 
-  core.startGroup('Configuration')
-  const username = 'repo-visualizer'
-  await exec('git', ['config', 'user.name', username])
-  await exec('git', [
-    'config',
-    'user.email',
-    `${username}@users.noreply.github.com`,
-  ])
-
-  core.endGroup()
-
-
   const excludedPathsString = core.getInput("excluded_paths") || "node_modules,bower_components,dist,out,build,eject,.next,.netlify,.yarn,.git,.vscode,package-lock.json,yarn.lock"
   const excludedPaths = excludedPathsString.split(",").map(str => str.trim())
   const data = await processDir(`./`, excludedPaths);
@@ -70,4 +58,3 @@ function execWithOutput(command, args) {
     }
   })
 }
-
